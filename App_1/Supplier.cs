@@ -54,8 +54,6 @@ namespace App_1
             }
         }
 
-
-
         string Id
         {
             get { return id; }
@@ -175,6 +173,32 @@ namespace App_1
             return false;
         }
 
+        public override string ToString()
+        {
+            return String.Format("Supplier object\nid: {0}\nname: {1}\naddress: {2}\nemail: {3}\nphone: {4}\n", id, name, address, email, phone);
+        }
 
+        public string ToShortString()
+        {
+            return String.Format("Supplier object. id: {0}; name: {1};", id, name);
+        }
+
+        public bool Equals(object? obj)
+        {
+            if (obj is not Supplier sup)
+                return false;
+
+            if (id != sup.id)
+                return false;
+            if (name != sup.name)
+                return false;
+            if (address != sup.address)
+                return false;
+            if (email != sup.email)
+                return false;
+            if (phone != sup.phone)
+                return false;
+            return true;
+        }
     }
 }
