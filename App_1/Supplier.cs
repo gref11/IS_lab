@@ -9,72 +9,25 @@ using System.Xml.Linq;
 
 namespace App_1
 {
-    internal class Supplier
+    internal class Supplier : ShortSupplier
     {
-        string id;
-        string name;
         string address;
         string email;
         string phone;
 
-        public Supplier(string id, string name, string address, string email, string phone) 
+        public Supplier(string id, string name, string address, string email, string phone) : base(id, name)
         {
-            Id = id;
-            Name = name;
             Address = address;
             Email = email;
             Phone = phone;
         }
 
-        public Supplier(string stringSup, bool isJson=false)
+        private Supplier((string id, string name, string address, string email, string phone) data) : this(data.id, data.name, data.address, data.email, data.phone)
         {
-            if (isJson)
-            {
-                using var doc = JsonDocument.Parse(stringSup);
-                var root = doc.RootElement;
-
-                Id = root.GetProperty("id").GetString();
-                Name = root.GetProperty("name").GetString();
-                Address = root.GetProperty("address").GetString();
-                Email = root.GetProperty("email").GetString();
-                Phone = root.GetProperty("phone").GetString();
-            }
-            else
-            {
-                string[] splittedString = stringSup.Split(';');
-
-                if (splittedString.Length != 5)
-                    throw new ArgumentException("Invalid string format");
-
-                Id = splittedString[0];
-                Name = splittedString[1];
-                Address = splittedString[2];
-                Email = splittedString[3];
-                Phone = splittedString[4];
-            }
         }
 
-        string Id
+        public Supplier(string stringSup, bool isJson=false) : this(ParseString(stringSup, isJson))
         {
-            get { return id; }
-            set {
-                if (ValidateId(value))
-                    id = value;
-                else
-                    throw GetInvalidFieldException("id");
-            }
-        }
-
-        string Name
-        { 
-            get { return name; }
-            set
-            {
-                if (ValidateName(value))
-                    name = value;
-                else
-                    throw GetInvalidFieldException("name");
-            }
         }
 
         string Address
@@ -113,33 +66,6 @@ namespace App_1
             }
         }
 
-        static Exception GetInvalidFieldException(string fieldName)
-        {
-            return new ArgumentException("Invalid supplier " + fieldName);
-        }
-
-        static bool ValidateId(string id)
-        {
-            string pattern = @"^[0-9]{6}$";
-            Regex rg = new Regex(pattern);
-
-            if (rg.IsMatch(id)) 
-                return true;
-
-            return false;
-        }
-
-        static bool ValidateName(string name)
-        {
-            string pattern = @"^[a-zA-Z\ ]{3,}$";
-            Regex rg = new Regex(pattern);
-
-            if (rg.IsMatch(name))
-                return true;
-
-            return false;
-        }
-
         static bool ValidateAddress(string address)
         {
             string pattern = @"^[a-zA-Z\ 0-9]{3,}$";
@@ -175,7 +101,7 @@ namespace App_1
 
         public override string ToString()
         {
-            return String.Format("Supplier object\nid: {0}\nname: {1}\naddress: {2}\nemail: {3}\nphone: {4}\n", id, name, address, email, phone);
+            return String.Format("{0}address: {1}\nemail: {2}\nphone: {3}\n", base.ToString(), address, email, phone);
         }
 
         public string ToShortString()
@@ -185,12 +111,11 @@ namespace App_1
 
         public bool Equals(object? obj)
         {
+
             if (obj is not Supplier sup)
                 return false;
 
-            if (id != sup.id)
-                return false;
-            if (name != sup.name)
+            if (!base.Equals(obj))
                 return false;
             if (address != sup.address)
                 return false;
@@ -199,6 +124,36 @@ namespace App_1
             if (phone != sup.phone)
                 return false;
             return true;
+        }
+
+        private static (string id, string name, string address, string email, string phone) ParseString(string stringSup, bool isJson = false)
+        {
+            if (isJson)
+            {
+                using var doc = JsonDocument.Parse(stringSup);
+                var root = doc.RootElement;
+
+                return (
+                    root.GetProperty("id").GetString(),
+                    root.GetProperty("name").GetString(),
+                    root.GetProperty("address").GetString(),
+                    root.GetProperty("email").GetString(),
+                    root.GetProperty("phone").GetString()
+                    );
+            }
+
+            string[] splittedString = stringSup.Split(';');
+
+            if (splittedString.Length != 5)
+                throw new ArgumentException("Invalid string format");
+
+            return (
+                splittedString[0],
+                splittedString[1],
+                splittedString[2],
+                splittedString[3],
+                splittedString[4]
+                );
         }
     }
 }
