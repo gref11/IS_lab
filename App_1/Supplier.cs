@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -19,15 +20,41 @@ namespace App_1
         public Supplier(string id, string name, string address, string email, string phone) 
         {
             Id = id;
-
             Name = name;
-
             Address = address;
-
             Email = email;
-
             Phone = phone;
         }
+
+        public Supplier(string stringSup, bool isJson=false)
+        {
+            if (isJson)
+            {
+                using var doc = JsonDocument.Parse(stringSup);
+                var root = doc.RootElement;
+
+                Id = root.GetProperty("id").GetString();
+                Name = root.GetProperty("name").GetString();
+                Address = root.GetProperty("address").GetString();
+                Email = root.GetProperty("email").GetString();
+                Phone = root.GetProperty("phone").GetString();
+            }
+            else
+            {
+                string[] splittedString = stringSup.Split(';');
+
+                if (splittedString.Length != 5)
+                    throw new ArgumentException("Invalid string format");
+
+                Id = splittedString[0];
+                Name = splittedString[1];
+                Address = splittedString[2];
+                Email = splittedString[3];
+                Phone = splittedString[4];
+            }
+        }
+
+
 
         string Id
         {
@@ -147,5 +174,7 @@ namespace App_1
 
             return false;
         }
+
+
     }
 }
