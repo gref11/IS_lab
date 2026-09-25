@@ -18,30 +18,15 @@ namespace App_1
 
         public Supplier(string id, string name, string address, string email, string phone) 
         {
-            if (ValidateId(id))
-                this.id = id;
-            else
-                throw new ArgumentException("Invalid supplier id");
+            Id = id;
 
-            if (ValidateName(name))
-                this.name = name;
-            else
-                throw new ArgumentException("Invalid supplier name");
+            Name = name;
 
-            if (ValidateAddress(address))
-                this.address = address;
-            else
-                throw new ArgumentException("Invalid supplier address");
+            Address = address;
 
-            if (ValidateEmail(email))
-                this.email = email;
-            else
-                throw new ArgumentException("Invalid supplier email");
+            Email = email;
 
-            if (ValidatePhone(phone))
-                this.phone = phone;
-            else
-                throw new ArgumentException("Invalid supplier phone");
+            Phone = phone;
         }
 
         string Id
@@ -51,7 +36,7 @@ namespace App_1
                 if (ValidateId(value))
                     id = value;
                 else
-                    throw new ArgumentException("Invalid supplier id");
+                    throw GetInvalidFieldException("id");
             }
         }
 
@@ -63,7 +48,7 @@ namespace App_1
                 if (ValidateName(value))
                     name = value;
                 else
-                    throw new ArgumentException("Invalid supplier name");
+                    throw GetInvalidFieldException("name");
             }
         }
 
@@ -75,7 +60,7 @@ namespace App_1
                 if (ValidateAddress(value))
                     address = value;
                 else
-                    throw new ArgumentException("Invalid supplier address");
+                    throw GetInvalidFieldException("address");
             }
         }
 
@@ -87,7 +72,7 @@ namespace App_1
                 if (ValidateEmail(value))
                     email = value;
                 else
-                    throw new ArgumentException("Invalid supplier email");
+                    throw GetInvalidFieldException("email");
             }
         }
 
@@ -99,8 +84,13 @@ namespace App_1
                 if (ValidatePhone(value))
                     phone = value;
                 else
-                    throw new ArgumentException("Invalid supplier phone");
+                    throw GetInvalidFieldException("phone");
             }
+        }
+
+        static Exception GetInvalidFieldException(string fieldName)
+        {
+            return new ArgumentException("Invalid supplier " + fieldName);
         }
 
         static bool ValidateId(string id)
