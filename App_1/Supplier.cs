@@ -47,31 +47,60 @@ namespace App_1
         string Id
         {
             get { return id; }
-            set { id = value; }
+            set {
+                if (ValidateId(value))
+                    id = value;
+                else
+                    throw new ArgumentException("Invalid supplier id");
+            }
         }
 
         string Name
         { 
-            get { return name; } 
-            set { name = value; } 
+            get { return name; }
+            set
+            {
+                if (ValidateName(value))
+                    name = value;
+                else
+                    throw new ArgumentException("Invalid supplier name");
+            }
         }
 
         string Address
         {
             get { return address; }
-            set { address = value; }
+            set
+            {
+                if (ValidateAddress(value))
+                    address = value;
+                else
+                    throw new ArgumentException("Invalid supplier address");
+            }
         }
 
         string Email
         {
             get { return email; }
-            set { email = value; }
+            set
+            {
+                if (ValidateEmail(value))
+                    email = value;
+                else
+                    throw new ArgumentException("Invalid supplier email");
+            }
         }
 
         string Phone
         {
             get { return phone; }
-            set { phone = value; }
+            set
+            {
+                if (ValidatePhone(value))
+                    phone = value;
+                else
+                    throw new ArgumentException("Invalid supplier phone");
+            }
         }
 
         static bool ValidateId(string id)
