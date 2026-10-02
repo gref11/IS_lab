@@ -12,14 +12,16 @@ namespace App_1
     internal class Supplier
     {
         string id;
+        string inn;
         string name;
         string address;
         string email;
         string phone;
 
-        public Supplier(string id, string name, string address, string email, string phone) 
+        public Supplier(string id, string inn, string name, string address, string email, string phone) 
         {
             Id = id;
+            Inn = inn;
             Name = name;
             Address = address;
             Email = email;
@@ -34,6 +36,7 @@ namespace App_1
                 var root = doc.RootElement;
 
                 Id = root.GetProperty("id").GetString();
+                Inn = root.GetProperty("inn").GetString();
                 Name = root.GetProperty("name").GetString();
                 Address = root.GetProperty("address").GetString();
                 Email = root.GetProperty("email").GetString();
@@ -43,14 +46,15 @@ namespace App_1
             {
                 string[] splittedString = stringSup.Split(';');
 
-                if (splittedString.Length != 5)
+                if (splittedString.Length != 6)
                     throw new ArgumentException("Invalid string format");
 
                 Id = splittedString[0];
-                Name = splittedString[1];
-                Address = splittedString[2];
-                Email = splittedString[3];
-                Phone = splittedString[4];
+                Inn = splittedString[1];
+                Name = splittedString[2];
+                Address = splittedString[3];
+                Email = splittedString[4];
+                Phone = splittedString[5];
             }
         }
 
@@ -62,6 +66,18 @@ namespace App_1
                     id = value;
                 else
                     throw GetInvalidFieldException("id");
+            }
+        }
+
+        string Inn
+        {
+            get { return inn; }
+            set
+            {
+                if (ValidateInn(value))
+                    inn = value;
+                else
+                    throw GetInvalidFieldException("inn");
             }
         }
 
@@ -129,9 +145,20 @@ namespace App_1
             return false;
         }
 
+        static bool ValidateInn(string inn)
+        {
+            string pattern = @"^[0-9]{10,12}$";
+            Regex rg = new Regex(pattern);
+
+            if (rg.IsMatch(inn))
+                return true;
+
+            return false;
+        }
+
         static bool ValidateName(string name)
         {
-            string pattern = @"^[a-zA-Z\ ]{3,}$";
+            string pattern = @"^[a-zA-Z\ а-яА-Я.]{3,}$";
             Regex rg = new Regex(pattern);
 
             if (rg.IsMatch(name))
@@ -175,12 +202,12 @@ namespace App_1
 
         public override string ToString()
         {
-            return String.Format("Supplier object\nid: {0}\nname: {1}\naddress: {2}\nemail: {3}\nphone: {4}\n", id, name, address, email, phone);
+            return String.Format("Supplier object -- id: {0}; inn: {1}; name: {2}; address: {3}; email: {4}; phone: {5}\n", id, inn, name, address, email, phone);
         }
 
         public string ToShortString()
         {
-            return String.Format("Supplier object. id: {0}; name: {1};", id, name);
+            return String.Format("Supplier object -- id: {0}; inn: {1}; name: {2};", id, inn, name);
         }
 
         public bool Equals(object? obj)
@@ -188,15 +215,7 @@ namespace App_1
             if (obj is not Supplier sup)
                 return false;
 
-            if (id != sup.id)
-                return false;
-            if (name != sup.name)
-                return false;
-            if (address != sup.address)
-                return false;
-            if (email != sup.email)
-                return false;
-            if (phone != sup.phone)
+            if (inn != sup.inn)
                 return false;
             return true;
         }

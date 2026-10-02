@@ -11,11 +11,13 @@ namespace App_1
     internal class ShortSupplier
     {
         string id;
+        string inn;
         string name;
 
-        public ShortSupplier(string id, string name)
+        public ShortSupplier(string id, string inn, string name)
         {
             Id = id;
+            Inn = inn;
             Name = name;
         }
 
@@ -28,6 +30,18 @@ namespace App_1
                     id = value;
                 else
                     throw GetInvalidFieldException("id");
+            }
+        }
+
+        string Inn
+        {
+            get { return inn; }
+            set
+            {
+                if (ValidateInn(value))
+                    inn = value;
+                else
+                    throw GetInvalidFieldException("inn");
             }
         }
 
@@ -59,9 +73,20 @@ namespace App_1
             return false;
         }
 
+        static bool ValidateInn(string inn)
+        {
+            string pattern = @"^[0-9]{10,12}$";
+            Regex rg = new Regex(pattern);
+
+            if (rg.IsMatch(inn))
+                return true;
+
+            return false;
+        }
+
         static bool ValidateName(string name)
         {
-            string pattern = @"^[a-zA-Z\ ]{3,}$";
+            string pattern = @"^[a-zA-Z\ а-яА-Я.]{3,}$";
             Regex rg = new Regex(pattern);
 
             if (rg.IsMatch(name))
@@ -72,7 +97,7 @@ namespace App_1
 
         public override string ToString()
         {
-            return String.Format("Supplier object\nid: {0}\nname: {1}\n", id, name);
+            return String.Format("Supplier object -- id: {0}; inn: {1}; name: {2}\n", id, inn, name);
         }
 
         public bool Equals(object? obj)
@@ -80,9 +105,7 @@ namespace App_1
             if (obj is not ShortSupplier sup)
                 return false;
 
-            if (id != sup.id)
-                return false;
-            if (name != sup.name)
+            if (inn != sup.inn)
                 return false;
             return true;
         }
