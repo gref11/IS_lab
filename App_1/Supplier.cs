@@ -58,7 +58,7 @@ namespace App_1
             }
         }
 
-        string Id
+        public string Id
         {
             get { return id; }
             set {
@@ -69,7 +69,7 @@ namespace App_1
             }
         }
 
-        string Inn
+        public string Inn
         {
             get { return inn; }
             set
@@ -81,7 +81,7 @@ namespace App_1
             }
         }
 
-        string Name
+        public string Name
         { 
             get { return name; }
             set
