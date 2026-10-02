@@ -10,8 +10,8 @@ namespace App_1
 {
     internal class ShortSupplier
     {
-        protected string id;
-        protected string name;
+        string id;
+        string name;
 
         public ShortSupplier(string id, string name)
         {
@@ -19,7 +19,7 @@ namespace App_1
             Name = name;
         }
 
-        protected string Id
+        string Id
         {
             get { return id; }
             set
@@ -31,7 +31,7 @@ namespace App_1
             }
         }
 
-        protected string Name
+        string Name
         {
             get { return name; }
             set
@@ -43,12 +43,12 @@ namespace App_1
             }
         }
 
-        protected static Exception GetInvalidFieldException(string fieldName)
+        static Exception GetInvalidFieldException(string fieldName)
         {
             return new ArgumentException("Invalid supplier " + fieldName);
         }
 
-        protected static bool ValidateId(string id)
+        static bool ValidateId(string id)
         {
             string pattern = @"^[0-9]{6}$";
             Regex rg = new Regex(pattern);
@@ -59,7 +59,7 @@ namespace App_1
             return false;
         }
 
-        protected static bool ValidateName(string name)
+        static bool ValidateName(string name)
         {
             string pattern = @"^[a-zA-Z\ ]{3,}$";
             Regex rg = new Regex(pattern);
