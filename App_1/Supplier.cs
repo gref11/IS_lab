@@ -58,6 +58,18 @@ namespace App_1
             }
         }
 
+        public Supplier(Supplier other, string id)
+        {
+            Id = id;
+            Inn = other.Inn;
+            Name = other.Name;
+            Address = other.Address;
+            Email = other.Email;
+            Phone = other.Phone;
+        }
+
+        public Supplier() {}
+
         public string Id
         {
             get { return id; }
@@ -93,7 +105,7 @@ namespace App_1
             }
         }
 
-        string Address
+        public string Address
         {
             get { return address; }
             set
@@ -105,7 +117,7 @@ namespace App_1
             }
         }
 
-        string Email
+        public string Email
         {
             get { return email; }
             set
@@ -117,7 +129,7 @@ namespace App_1
             }
         }
 
-        string Phone
+        public string Phone
         {
             get { return phone; }
             set
@@ -136,7 +148,7 @@ namespace App_1
 
         static bool ValidateId(string id)
         {
-            string pattern = @"^[0-9]{6}$";
+            string pattern = @"^[0-9]{6,}$";
             Regex rg = new Regex(pattern);
 
             if (rg.IsMatch(id)) 
@@ -180,7 +192,7 @@ namespace App_1
 
         static bool ValidateEmail(string email)
         {
-            string pattern = @"[a-zA-Z]+[a-zA-Z0-9\ \.]*@[a-z]{3,}\.[a-z]{2,}$";
+            string pattern = @"^[a-zA-Z]+[a-zA-Z0-9\ \.]*@[a-z]{3,}\.[a-z]{2,}$";
             Regex rg = new Regex(pattern);
 
             if (rg.IsMatch(email))
@@ -210,7 +222,7 @@ namespace App_1
             return String.Format("Supplier object -- id: {0}; inn: {1}; name: {2};", id, inn, name);
         }
 
-        public bool Equals(object? obj)
+        public override bool Equals(object? obj)
         {
             if (obj is not Supplier sup)
                 return false;

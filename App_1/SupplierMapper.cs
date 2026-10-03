@@ -23,5 +23,17 @@ namespace App_1
 
             return shortSupplier;
         }
-}
+
+        public static ShortSupplier[] ToShortSuppliers(Supplier[] suppliers)
+        {
+            ShortSupplier[] shortSuppliers = new ShortSupplier[suppliers.Length];
+
+            for (int i = 0; i < suppliers.Length; ++i)
+            {
+                shortSuppliers[i] = ToShortSupplier(suppliers[i]);
+            }
+
+            return shortSuppliers;
+        }
+    }
 }
