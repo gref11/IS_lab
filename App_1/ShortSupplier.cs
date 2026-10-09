@@ -21,7 +21,7 @@ namespace App_1
             Name = name;
         }
 
-        string Id
+        public string Id
         {
             get { return id; }
             set
@@ -33,7 +33,7 @@ namespace App_1
             }
         }
 
-        string Inn
+        public string Inn
         {
             get { return inn; }
             set
@@ -45,7 +45,7 @@ namespace App_1
             }
         }
 
-        string Name
+        public string Name
         {
             get { return name; }
             set
@@ -64,7 +64,7 @@ namespace App_1
 
         static bool ValidateId(string id)
         {
-            string pattern = @"^[0-9]{6,}$";
+            string pattern = @"^[0-9]{1,}$";
             Regex rg = new Regex(pattern);
 
             if (rg.IsMatch(id))

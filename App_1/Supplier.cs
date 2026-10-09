@@ -148,7 +148,7 @@ namespace App_1
 
         static bool ValidateId(string id)
         {
-            string pattern = @"^[0-9]{6,}$";
+            string pattern = @"^[0-9]{1,}$";
             Regex rg = new Regex(pattern);
 
             if (rg.IsMatch(id)) 
