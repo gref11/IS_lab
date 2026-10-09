@@ -49,9 +49,6 @@ namespace App_1
 
         public Supplier[] GetN(int ind, int count)
         {
-            if (ind < 0 || ind + count > Count())
-                throw new ArgumentException("Index out of range");
-
             return suppliers.Skip(ind * count).Take(count).ToArray();
         }
 
