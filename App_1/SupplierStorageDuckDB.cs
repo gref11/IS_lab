@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace App_1
 {
-    internal class SupplierStorageDuckDB : ISupplierStorage
+    internal class SupplierStorageDuckDB : ISupplierStorage, IStorageDuckDB
     {
         DuckDB.NET.Data.DuckDBConnection connection;
         DuckDB.NET.Data.DuckDBCommand commandAdd;
@@ -72,6 +72,8 @@ namespace App_1
                 WHERE id = $id
                 """;
         }
+
+        public DuckDBConnection Connection { get { return connection; } }
 
         public string Add(Supplier supplier)
         {
