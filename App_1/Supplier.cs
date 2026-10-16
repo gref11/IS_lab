@@ -18,7 +18,7 @@ namespace App_1
         string email;
         string phone;
 
-        public Supplier(string id, string inn, string name, string address, string email, string phone) 
+        public Supplier(string id, string inn, string name, string address, string email, string phone)
         {
             Id = id;
             Inn = inn;
@@ -28,7 +28,7 @@ namespace App_1
             Phone = phone;
         }
 
-        public Supplier(string stringSup, bool isJson=false)
+        public Supplier(string stringSup, bool isJson = false)
         {
             if (isJson)
             {
@@ -68,12 +68,13 @@ namespace App_1
             Phone = other.Phone;
         }
 
-        public Supplier() {}
+        public Supplier() { }
 
         public string Id
         {
             get { return id; }
-            set {
+            set
+            {
                 if (ValidateId(value))
                     id = value;
                 else
@@ -94,7 +95,7 @@ namespace App_1
         }
 
         public string Name
-        { 
+        {
             get { return name; }
             set
             {
@@ -151,7 +152,7 @@ namespace App_1
             string pattern = @"^[0-9]{1,}$";
             Regex rg = new Regex(pattern);
 
-            if (rg.IsMatch(id)) 
+            if (rg.IsMatch(id))
                 return true;
 
             return false;

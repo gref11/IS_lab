@@ -102,7 +102,7 @@ namespace App_1
             commandDelete.Parameters.Add(new DuckDBParameter("id", int.Parse(id)));
 
             commandDelete.ExecuteNonQuery();
-            
+
             commandDelete.Parameters.Clear();
         }
 

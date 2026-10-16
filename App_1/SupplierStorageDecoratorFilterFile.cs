@@ -27,16 +27,16 @@ namespace App_1
             List<Supplier> resSuppliers = new List<Supplier>();
 
             //for (int i = 0; count * i < storage.Count() && resSuppliers.Count < (ind + 1) * count; ++i)
-                //foreach (Supplier supplier in storage.GetN(i, count))
-                foreach (Supplier supplier in storage.GetAll())
-                    if (CheckSupplier(supplier))
-                        resSuppliers.Add(supplier);
+            //foreach (Supplier supplier in storage.GetN(i, count))
+            foreach (Supplier supplier in storage.GetAll())
+                if (CheckSupplier(supplier))
+                    resSuppliers.Add(supplier);
 
             if (Order is not null && (bool)Order)
                 resSuppliers.Sort((a, b) => a.Name.CompareTo(b.Name));
             if (Reverse is not null && (bool)Reverse)
                 resSuppliers.Reverse();
-            
+
 
             return resSuppliers.Skip(ind * count).Take(count).ToArray();
         }

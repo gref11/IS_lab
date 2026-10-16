@@ -101,7 +101,8 @@ namespace App_1
                 commandText += "ORDER BY name\n";
                 if (Reverse is not null && (bool)Reverse)
                     commandText += "DESC\n";
-            } else
+            }
+            else
             {
                 commandText += "ORDER BY id\n";
                 if (Reverse is not null && (bool)Reverse)
